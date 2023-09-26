@@ -1,11 +1,31 @@
-import {Image, StyleSheet, View} from 'react-native';
-import { colors } from '../../config/colors';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {colors} from '../../config/colors';
+import Header from '../../components/Header';
+import {useState} from 'react';
 
 export default function Home() {
+  const [text, setText] = useState('');
+
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-       <Image source={require('../../assets/logo.png')} />
+      <Header />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Adicione uma nova tarefa"
+          placeholderTextColor={colors.gray300}
+          onChangeText={newText => setText(newText)}
+          defaultValue={text}
+        />
+        <TouchableOpacity style={styles.inputButton} onPress={() => {}}>
+          <Text style={styles.inputButtonText}>O</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -13,15 +33,36 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:colors.gray700,
     height: '100%',
+    backgroundColor: colors.gray700,
   },
-  headerContainer: {
-    height: 150,
-    backgroundColor: colors.gray900,
+  inputContainer: {
+    top: -20,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 20,
-    paddingBottom: 40,
+    gap: 10
+  },
+  input: {
+    width: '70%',
+    height: 45,
+    borderColor: colors.gray900,
+    borderRadius: 5,
+    backgroundColor: colors.gray500,
+    color: colors.gray100,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  inputButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    width: 50,
+    borderRadius: 5,
+    borderColor: colors.gray900,
+    backgroundColor: colors.blue300,
+  },
+  inputButtonText: {
+    color: colors.white,
   },
 });
