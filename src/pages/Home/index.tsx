@@ -8,6 +8,7 @@ import {
 import {colors} from '../../config/colors';
 import Header from '../../components/Header';
 import {useState} from 'react';
+import {PlusCircle} from 'react-native-feather';
 
 export default function Home() {
   const [text, setText] = useState('');
@@ -24,7 +25,7 @@ export default function Home() {
           defaultValue={text}
         />
         <TouchableOpacity style={styles.inputButton} onPress={() => {}}>
-          <Text style={styles.inputButtonText}>O</Text>
+          <PlusCircle stroke="white" width={16} height={16} />
         </TouchableOpacity>
       </View>
     </View>
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 10
+    gap: 10,
   },
   input: {
     width: '70%',
@@ -56,13 +57,12 @@ const styles = StyleSheet.create({
   inputButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
+    height: 45,
     width: 50,
     borderRadius: 5,
     borderColor: colors.gray900,
     backgroundColor: colors.blue300,
-  },
-  inputButtonText: {
-    color: colors.white,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 });
