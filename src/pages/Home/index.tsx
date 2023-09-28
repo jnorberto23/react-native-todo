@@ -28,6 +28,16 @@ export default function Home() {
           <PlusCircle stroke="white" width={16} height={16} />
         </TouchableOpacity>
       </View>
+      <View style={styles.tasksInfoContainer}>
+        <View style={styles.tasksInfo}>
+          <Text style={styles.tasksInfoCreatedText}>Criadas</Text>
+          <Text style={styles.tasksBadge}>0</Text>
+        </View>
+        <View style={styles.tasksInfo}>
+          <Text style={styles.tasksInfoDoneText}>Concluídas</Text>
+          <Text style={styles.tasksBadge}>0</Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -64,5 +74,37 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue300,
     paddingLeft: 15,
     paddingRight: 15,
+  },
+  tasksInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+    paddingLeft: 35,
+    paddingRight: 35,
+  },
+  tasksInfo: {
+    gap: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  tasksInfoCreatedText: {
+    color: colors.blue100,
+    fontWeight: 'bold'
+  },
+  tasksInfoDoneText: {
+    color: colors.purple,
+    fontWeight: 'bold'
+  },
+  tasksBadge: {
+    backgroundColor: colors.gray400,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderRadius: 50,
+    color: colors.white,
+    fontWeight: 'bold'
   },
 });
