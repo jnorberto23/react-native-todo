@@ -11,8 +11,7 @@ import {colors} from '../../config/colors';
 import Header from '../../components/Header';
 import {useState} from 'react';
 import {PlusCircle} from 'react-native-feather';
-
-type ItemProps = {title: string};
+import ListItem from '../../components/ListItem';
 
 const TODO_LIST = [
   {
@@ -71,13 +70,6 @@ const TODO_LIST = [
 
 export default function Home() {
   const [text, setText] = useState('');
-
-  const Item = ({title}: ItemProps) => (
-    <View style={styles.itemContainer}>
-      <Text>{title}</Text>
-    </View>
-  );
-
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -107,7 +99,7 @@ export default function Home() {
         <SafeAreaView>
           <FlatList
             data={TODO_LIST}
-            renderItem={({item}) => <Item title={item.title} />}
+            renderItem={({item}) => <ListItem title={item.title} />}
             keyExtractor={item => item.id}
           />
         </SafeAreaView>
@@ -179,15 +171,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     color: colors.white,
     fontWeight: 'bold',
-  },
-  itemContainer: {
-    backgroundColor: colors.white,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 30,
-    height: 40,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center'
   }
 });
