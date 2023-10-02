@@ -9,14 +9,14 @@ interface ITask {
 
 interface TaskState {
   tasks: ITask[];
-  increaseTask: (text: string) => void;
+  addTask: (text: string) => void;
   removeTask: (id: string) => void;
   changeTaskStatus: (id: string, status: boolean) => void;
 }
 
 export const useTaskStore = create<TaskState>()(set => ({
   tasks: [],
-  increaseTask: (text: string) =>
+  addTask: (text: string) =>
     set(state => ({
       tasks: [
         ...state.tasks,

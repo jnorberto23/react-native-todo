@@ -17,12 +17,21 @@ import {useTaskStore} from '../../store/TaskStore';
 export default function Home() {
   const [text, setText] = useState('');
   const tasks = useTaskStore(state => state.tasks);
-  const increaseTask = useTaskStore(state => state.increaseTask);
-  const tasksDoneCount = useTaskStore
-    .getState()
-    .tasks.filter(task => task.isDone).length;
-  const tasksCount = useTaskStore.getState().tasks.length;
+  const addTask = useTaskStore(state => state.addTask);
+  const tasksDoneCount = useTaskStore.getState().tasks.filter(task => task.isDone).length;
+  const tasksCount = useTaskStore.getState().tasks.length
 
+  const handleChangeText = (text: string) => {
+    setText(text);
+  };
+
+  const handleAddTask = () => {
+    if (text.trim() !== '') {
+      addTask(text);
+      setText('');
+    }
+  };
+  
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -31,12 +40,10 @@ export default function Home() {
           style={styles.input}
           placeholder="Adicione uma nova tarefa"
           placeholderTextColor={colors.gray300}
-          onChangeText={newText => setText(newText)}
+          onChangeText={handleChangeText}
           defaultValue={text}
         />
-        <TouchableOpacity
-          style={styles.inputButton}
-          onPress={() => increaseTask(text)}>
+        <TouchableOpacity style={styles.inputButton} onPress={handleAddTask}>
           <PlusCircle stroke="white" width={16} height={16} />
         </TouchableOpacity>
       </View>

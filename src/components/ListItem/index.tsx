@@ -1,8 +1,8 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../config/colors';
-import {useEffect, useState} from 'react';
-import {Trash2} from 'react-native-feather';
-import {useTaskStore} from '../../store/TaskStore';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Trash2 } from 'react-native-feather';
+import { useTaskStore } from '../../store/TaskStore';
+import { colors } from '../../config/colors';
 
 interface ItemProps {
   id: string;
@@ -10,9 +10,11 @@ interface ItemProps {
   isDone: boolean;
 }
 
-export default function ListItem({title, isDone, id}: ItemProps) {
-  const changeTaskStatus = useTaskStore(state => state.changeTaskStatus);
-  const removeTask = useTaskStore(state => state.removeTask);
+export default function ListItem({ title, isDone, id }: ItemProps) {
+  const { changeTaskStatus, removeTask } = useTaskStore((state) => ({
+    changeTaskStatus: state.changeTaskStatus,
+    removeTask: state.removeTask,
+  }));
   const [isSelected, setIsSelected] = useState(isDone);
 
   useEffect(() => {
@@ -20,8 +22,9 @@ export default function ListItem({title, isDone, id}: ItemProps) {
   }, [isSelected]);
 
   const handleChangeTaskStatus = () => {
-    setIsSelected(prevState => !prevState);
+    setIsSelected((prevState) => !prevState);
   };
+
   const handleRemoveTask = () => {
     removeTask(id);
   };
@@ -29,15 +32,23 @@ export default function ListItem({title, isDone, id}: ItemProps) {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.wrapper} onPress={handleChangeTaskStatus}>
-        {isSelected === true ? (
-          <View style={styles.radioSelected}>
+        <View
+          style={[
+            styles.radio,
+            isSelected ? styles.radioSelected : null,
+          ]}
+        >
+          {isSelected === true && (
             <Text style={styles.radioSpan}>✔</Text>
-          </View>
-        ) : (
-          <View style={styles.radio} />
-        )}
+          )}
+        </View>
       </TouchableOpacity>
-      <Text style={isSelected ? styles.textWithDecorationLine : styles.text}>
+      <Text
+        style={[
+          styles.text,
+          isSelected ? styles.textWithDecorationLine : null,
+        ]}
+      >
         {title}
       </Text>
       <TouchableOpacity onPress={handleRemoveTask}>
@@ -73,12 +84,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   radioSelected: {
-    width: 25,
-    height: 25,
     borderColor: colors.purple,
     backgroundColor: colors.purple,
-    borderRadius: 20,
-    borderWidth: 2,
   },
   radioSpan: {
     padding: 3,
@@ -92,7 +99,6 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   textWithDecorationLine: {
-    width: '75%',
     color: colors.gray300,
     textDecorationLine: 'line-through',
   },
