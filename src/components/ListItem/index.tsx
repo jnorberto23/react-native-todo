@@ -1,28 +1,34 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../config/colors';
 import {useEffect, useState} from 'react';
-import { Trash2 } from 'react-native-feather';
-import { useTaskStore } from '../../store/TaskStore';
+import {Trash2} from 'react-native-feather';
+import {useTaskStore} from '../../store/TaskStore';
 
 interface ItemProps {
-  id: string,
-  title: string,
-  isDone: boolean
+  id: string;
+  title: string;
+  isDone: boolean;
 }
 
 export default function ListItem({title, isDone, id}: ItemProps) {
   const changeTaskStatus = useTaskStore(state => state.changeTaskStatus);
+  const removeTask = useTaskStore(state => state.removeTask);
   const [isSelected, setIsSelected] = useState(isDone);
 
   useEffect(() => {
-    changeTaskStatus(id, isSelected)
-  }, [isSelected])
+    changeTaskStatus(id, isSelected);
+  }, [isSelected]);
+
+  const handleChangeTaskStatus = () => {
+    setIsSelected(prevState => !prevState);
+  };
+  const handleRemoveTask = () => {
+    removeTask(id);
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.wrapper}
-        onPress={() => setIsSelected(prevState => !prevState)}>
+      <TouchableOpacity style={styles.wrapper} onPress={handleChangeTaskStatus}>
         {isSelected === true ? (
           <View style={styles.radioSelected}>
             <Text style={styles.radioSpan}>✔</Text>
@@ -31,10 +37,12 @@ export default function ListItem({title, isDone, id}: ItemProps) {
           <View style={styles.radio} />
         )}
       </TouchableOpacity>
-      <Text style={isSelected ? styles.textWithDecorationLine : styles.text}>{title}</Text>
-      <TouchableOpacity >
+      <Text style={isSelected ? styles.textWithDecorationLine : styles.text}>
+        {title}
+      </Text>
+      <TouchableOpacity onPress={handleRemoveTask}>
         <Trash2 stroke="grey" width={20} height={20} />
-      </TouchableOpacity >
+      </TouchableOpacity>
     </View>
   );
 }
