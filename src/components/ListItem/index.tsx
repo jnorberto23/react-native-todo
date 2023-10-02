@@ -1,7 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../config/colors';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { Trash2 } from 'react-native-feather';
+import { useTaskStore } from '../../store/TaskStore';
 
 interface ItemProps {
   id: string,
@@ -9,8 +10,14 @@ interface ItemProps {
   isDone: boolean
 }
 
-export default function ListItem({title, isDone}: ItemProps) {
+export default function ListItem({title, isDone, id}: ItemProps) {
+  const changeTaskStatus = useTaskStore(state => state.changeTaskStatus);
   const [isSelected, setIsSelected] = useState(isDone);
+
+  useEffect(() => {
+    changeTaskStatus(id, isSelected)
+  }, [isSelected])
+
   return (
     <View style={styles.container}>
       <TouchableOpacity

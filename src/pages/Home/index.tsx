@@ -15,9 +15,13 @@ import ListItem from '../../components/ListItem';
 import {useTaskStore} from '../../store/TaskStore';
 
 export default function Home() {
+  const [text, setText] = useState('');
   const tasks = useTaskStore(state => state.tasks);
   const increaseTask = useTaskStore(state => state.increaseTask);
-  const [text, setText] = useState('');
+  const tasksDoneCount = useTaskStore
+    .getState()
+    .tasks.filter(task => task.isDone).length;
+  const tasksCount = useTaskStore.getState().tasks.length;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,18 +34,20 @@ export default function Home() {
           onChangeText={newText => setText(newText)}
           defaultValue={text}
         />
-        <TouchableOpacity style={styles.inputButton} onPress={() => increaseTask(text)}>
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={() => increaseTask(text)}>
           <PlusCircle stroke="white" width={16} height={16} />
         </TouchableOpacity>
       </View>
       <View style={styles.tasksInfoContainer}>
         <View style={styles.tasksInfo}>
           <Text style={styles.tasksInfoCreatedText}>Criadas</Text>
-          <Text style={styles.tasksBadge}>0</Text>
+          <Text style={styles.tasksBadge}>{tasksCount}</Text>
         </View>
         <View style={styles.tasksInfo}>
           <Text style={styles.tasksInfoDoneText}>Concluídas</Text>
-          <Text style={styles.tasksBadge}>0</Text>
+          <Text style={styles.tasksBadge}>{tasksDoneCount}</Text>
         </View>
       </View>
 

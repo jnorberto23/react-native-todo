@@ -10,7 +10,7 @@ interface ITask {
 interface TaskState {
   tasks: ITask[];
   increaseTask: (text: string) => void;
-  changeTaskStatus: (id: string, status: string) => void;
+  changeTaskStatus: (id: string, status: boolean) => void;
 }
 
 export const useTaskStore = create<TaskState>()(set => ({
@@ -26,10 +26,10 @@ export const useTaskStore = create<TaskState>()(set => ({
         },
       ],
     })),
-  changeTaskStatus: (id: string, status: string) =>
+  changeTaskStatus: (id: string, isDone: boolean) =>
     set(state => ({
       tasks: state.tasks.map(task =>
-        task.id === id ? {...task, status} : task,
+        task.id === id ? {...task, isDone} : task
       ),
     })),
 }));
