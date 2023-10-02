@@ -10,7 +10,7 @@ import {
 import {colors} from '../../config/colors';
 import Header from '../../components/Header';
 import {useState} from 'react';
-import {PlusCircle} from 'react-native-feather';
+import {Clipboard, PlusCircle} from 'react-native-feather';
 import ListItem from '../../components/ListItem';
 import {useTaskStore} from '../../store/TaskStore';
 
@@ -18,8 +18,10 @@ export default function Home() {
   const [text, setText] = useState('');
   const tasks = useTaskStore(state => state.tasks);
   const addTask = useTaskStore(state => state.addTask);
-  const tasksDoneCount = useTaskStore.getState().tasks.filter(task => task.isDone).length;
-  const tasksCount = useTaskStore.getState().tasks.length
+  const tasksDoneCount = useTaskStore
+    .getState()
+    .tasks.filter(task => task.isDone).length;
+  const tasksCount = useTaskStore.getState().tasks.length;
 
   const handleChangeText = (text: string) => {
     setText(text);
@@ -31,7 +33,7 @@ export default function Home() {
       setText('');
     }
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -59,11 +61,23 @@ export default function Home() {
       </View>
 
       <SafeAreaView>
-        <FlatList
-          data={tasks}
-          renderItem={({item}) => <ListItem {...item} />}
-          keyExtractor={item => item.id}
-        />
+        {tasks.length ? (
+          <FlatList
+            data={tasks}
+            renderItem={({item}) => <ListItem {...item} />}
+            keyExtractor={item => item.id}
+          />
+        ) : (
+          <View style={styles.emptyList}>
+            <Clipboard stroke={colors.gray300} width={70} height={70} />
+            <Text style={styles.emptyListText}>
+              Você ainda não tem tarefas cadastradas
+            </Text>
+            <Text style={styles.emptyListSubText}>
+              Crie tarefas e organize seus itens a fazer
+            </Text>
+          </View>
+        )}
       </SafeAreaView>
     </SafeAreaView>
   );
@@ -133,5 +147,26 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     color: colors.white,
     fontWeight: 'bold',
+  },
+  emptyList: {
+    marginRight: 35,
+    marginLeft: 35,
+    marginTop: 15,
+    paddingTop: 15,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 5,
+    borderTopWidth: 1,
+    borderTopColor: colors.gray200,
+  },
+  emptyListText: {
+    color: colors.gray300,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  emptyListSubText: {
+    color: colors.gray300,
+    fontSize: 14,
   },
 });

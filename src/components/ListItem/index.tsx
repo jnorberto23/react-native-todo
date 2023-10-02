@@ -15,14 +15,14 @@ export default function ListItem({ title, isDone, id }: ItemProps) {
     changeTaskStatus: state.changeTaskStatus,
     removeTask: state.removeTask,
   }));
-  const [isSelected, setIsSelected] = useState(isDone);
+  const [isTaskDone, setIsTaskDone] = useState(isDone);
 
   useEffect(() => {
-    changeTaskStatus(id, isSelected);
-  }, [isSelected]);
+    changeTaskStatus(id, isTaskDone);
+  }, [isTaskDone]);
 
   const handleChangeTaskStatus = () => {
-    setIsSelected((prevState) => !prevState);
+    setIsTaskDone((prevState) => !prevState);
   };
 
   const handleRemoveTask = () => {
@@ -35,10 +35,10 @@ export default function ListItem({ title, isDone, id }: ItemProps) {
         <View
           style={[
             styles.radio,
-            isSelected ? styles.radioSelected : null,
+            isTaskDone ? styles.radioSelected : null,
           ]}
         >
-          {isSelected === true && (
+          {isTaskDone === true && (
             <Text style={styles.radioSpan}>✔</Text>
           )}
         </View>
@@ -46,7 +46,7 @@ export default function ListItem({ title, isDone, id }: ItemProps) {
       <Text
         style={[
           styles.text,
-          isSelected ? styles.textWithDecorationLine : null,
+          isTaskDone ? styles.textWithDecorationLine : null,
         ]}
       >
         {title}
