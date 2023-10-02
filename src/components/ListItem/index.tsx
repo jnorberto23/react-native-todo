@@ -3,10 +3,14 @@ import {colors} from '../../config/colors';
 import {useState} from 'react';
 import { Trash2 } from 'react-native-feather';
 
-type ItemProps = {title: string};
+interface ItemProps {
+  id: string,
+  title: string,
+  isDone: boolean
+}
 
-export default function ListItem({title}: ItemProps) {
-  const [isSelected, setIsSelected] = useState(true);
+export default function ListItem({title, isDone}: ItemProps) {
+  const [isSelected, setIsSelected] = useState(isDone);
   return (
     <View style={styles.container}>
       <TouchableOpacity
