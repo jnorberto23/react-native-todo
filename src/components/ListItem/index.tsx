@@ -1,6 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../config/colors';
 import {useState} from 'react';
+import { Trash2 } from 'react-native-feather';
 
 type ItemProps = {title: string};
 
@@ -19,8 +20,10 @@ export default function ListItem({title}: ItemProps) {
           <View style={styles.radio} />
         )}
       </TouchableOpacity>
-      <Text style={styles.text}>{title}</Text>
-      <TouchableOpacity style={styles.radio} />
+      <Text style={isSelected ? styles.textWithDecorationLine : styles.text}>{title}</Text>
+      <TouchableOpacity >
+        <Trash2 stroke="grey" width={20} height={20} />
+      </TouchableOpacity >
     </View>
   );
 }
@@ -68,5 +71,10 @@ const styles = StyleSheet.create({
   text: {
     width: '75%',
     color: colors.white,
+  },
+  textWithDecorationLine: {
+    width: '75%',
+    color: colors.gray300,
+    textDecorationLine: 'line-through',
   },
 });
