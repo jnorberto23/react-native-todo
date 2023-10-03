@@ -8,10 +8,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {colors} from '../../config/colors';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
+
+  const handleLogin = () => {
+    // Verifique o email e a senha (substitua esta lógica pela sua)
+    if (email === 'email' && password === 'senha') {
+      navigation.navigate('Home')
+    } else {
+      console.log('Senha ou email incorretos')
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -32,7 +44,7 @@ export default function Login() {
           secureTextEntry
         />
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
     </View>
