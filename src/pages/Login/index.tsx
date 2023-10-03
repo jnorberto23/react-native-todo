@@ -14,28 +14,31 @@ export default function Login() {
   const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Faça Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={colors.gray300}
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        placeholderTextColor={colors.gray300}
-        onChangeText={text => setPassword(text)}
-        value={password}
-        secureTextEntry
-      />
+      <Text style={styles.title}>Login</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor={colors.gray300}
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          placeholderTextColor={colors.gray300}
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          secureTextEntry
+        />
+      </View>
       <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -49,17 +52,19 @@ const styles = StyleSheet.create({
     color: colors.blue100,
     fontWeight: 'bold',
   },
-  input: {
+  inputContainer: {
     width: '80%',
+  },
+  input: {
     height: 50,
-    borderWidth: 1,
-    borderColor: colors.gray900,
-    backgroundColor: colors.gray500,
-    color: colors.gray100,
     marginBottom: 20,
     padding: 12,
     borderRadius: 10,
     fontSize: 16,
+    backgroundColor: colors.gray500,
+    color: colors.gray100,
+    borderColor: colors.gray900,
+    borderWidth: 1,
   },
   loginButton: {
     backgroundColor: colors.blue300,
