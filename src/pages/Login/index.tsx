@@ -3,27 +3,27 @@ import {
   View,
   Text,
   TextInput,
-  Pressable,
   StyleSheet,
   TouchableOpacity,
-  Modal,
-  Alert,
 } from 'react-native';
 import {colors} from '../../config/colors';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+
+type Nav = {
+  navigate: (value: string) => void;
+}
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
+  const [errorText, setErrorText] = useState(false);
+  const { navigate } = useNavigation<Nav>()
 
   const handleLogin = () => {
-
     if (email === 'email' && password === 'senha') {
-      navigation.navigate('Home')
+      navigate('Home');
     } else {
-      setModalVisible(true)
+      setErrorText(true);
     }
   };
 
@@ -35,41 +35,24 @@ export default function Login() {
           style={styles.input}
           placeholder="Email"
           placeholderTextColor={colors.gray300}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={text => setEmail(text)}
           value={email}
         />
         <TextInput
           style={styles.input}
           placeholder="Senha"
           placeholderTextColor={colors.gray300}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={text => setPassword(text)}
           value={password}
           secureTextEntry
         />
+        {errorText && (
+          <Text style={styles.errorText}>Email ou senha incorretos</Text>
+        )}
       </View>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Email ou senha incorreta</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Voltar</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 }
@@ -114,45 +97,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+    marginBottom: 5
   },
 });
