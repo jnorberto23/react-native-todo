@@ -1,39 +1,32 @@
-import React, { useState } from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { colors } from '../../config/colors';
-import { Clipboard } from 'react-native-feather';
-import ListItem from '../../components/ListItem';
-import { useNoteStore } from '../../store/NoteStore';
+import React from 'react';
+import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {colors} from '../../config/colors';
+import {Clipboard} from 'react-native-feather';
 import Header from '../../components/Header';
+import uuid from 'react-native-uuid';
+import NoteItem from './components/NoteItem';
 
 export default function Notes() {
-  const [text, setText] = useState('');
-  const [title, setTitle] = useState('');
-  const notes = useNoteStore(state => state.notes);
-  const addNote = useNoteStore(state => state.addNote);
 
-  const handleChangeText = (text: string) => {
-    setText(text);
-  };
-
-  const handleTitleChange = (titleText: string) => {
-    setTitle(titleText);
-  };
-
-  const handleAddTask = () => {
-    if (text.trim() !== '') {
-      addNote(text, title);
-      setText('');
-      setTitle('');
-    }
-  };
-
+  const notes = [
+    {
+      id: uuid.v4().toString(),
+      title: 'Minha primeira anotação',
+    },
+    {
+      id: uuid.v4().toString(),
+      title: 'Comprar leite',
+    },
+    {
+      id: uuid.v4().toString(),
+      title: 'Ligar para o médico',
+    },
+    {
+      id: uuid.v4().toString(),
+      title: 'Reunião de trabalho',
+    },
+  ];
+ 
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -42,7 +35,7 @@ export default function Notes() {
         {notes.length ? (
           <FlatList
             data={notes}
-            renderItem={({ item }) => <ListItem {...item} />}
+            renderItem={({item}) => <NoteItem {...item} />}
             keyExtractor={item => item.id}
           />
         ) : (

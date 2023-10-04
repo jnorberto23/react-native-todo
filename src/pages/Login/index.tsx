@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {colors} from '../../config/colors';
-import {useNavigation} from '@react-navigation/native';
 import {useAuthStore} from '../../store/AuthStore';
 
 type Nav = {

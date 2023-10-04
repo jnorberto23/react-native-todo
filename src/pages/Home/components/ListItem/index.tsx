@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Trash2 } from 'react-native-feather';
-import { useTaskStore } from '../../store/TaskStore';
-import { colors } from '../../config/colors';
+import { colors } from '../../../../config/colors';
+import { useTaskStore } from '../../../../store/TaskStore';
 
 interface ItemProps {
   id: string;

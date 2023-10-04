@@ -11,8 +11,8 @@ import {colors} from '../../config/colors';
 import Header from '../../components/Header';
 import {useState} from 'react';
 import {Clipboard, PlusCircle} from 'react-native-feather';
-import ListItem from '../../components/ListItem';
 import {useTaskStore} from '../../store/TaskStore';
+import ListItem from './components/ListItem';
 
 export default function Home() {
   const [text, setText] = useState('');
