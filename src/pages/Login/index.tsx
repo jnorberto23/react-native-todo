@@ -8,20 +8,22 @@ import {
 } from 'react-native';
 import {colors} from '../../config/colors';
 import {useNavigation} from '@react-navigation/native';
+import {useAuthStore} from '../../store/AuthStore';
 
 type Nav = {
   navigate: (value: string) => void;
-}
+};
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorText, setErrorText] = useState(false);
-  const { navigate } = useNavigation<Nav>()
+
+  const login = useAuthStore(state => state.login);
 
   const handleLogin = () => {
     if (email === 'email' && password === 'senha') {
-      navigate('Home');
+      login();
     } else {
       setErrorText(true);
     }
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '80%',
+    marginBottom: 10,
   },
   input: {
     height: 50,
@@ -100,6 +103,5 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 16,
-    marginBottom: 5
   },
 });
